@@ -1,22 +1,34 @@
 package ourbuisnessproject;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "enterprises")
 public class Enterprise {
     /**
      * Create an Enterprise
      */
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotBlank
+    @Column(nullable = false)
     private String name;
     @Size(min = 10, max = 100)
+    @Column(nullable = false)
     private String description;
     @NotBlank
+    @Column(nullable = false)
     private String contactName;
     @NotBlank
     @Email
+    @Column(nullable = false)
     private String contactEmail;
 
     /**
@@ -49,6 +61,22 @@ public class Enterprise {
      */
     public void setContactEmail(String contactEmail){
         this.contactEmail = contactEmail;
+    }
+
+    public Long getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getDescription(){
+        return description;
+    }
+    public String getContactName(){
+        return contactName;
+    }
+    public void setId(Long id){
+        this.id = id;
     }
 
 

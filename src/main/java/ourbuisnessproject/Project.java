@@ -24,11 +24,23 @@ public class Project {
     @Column(length = 2000)
     public String description;
 
+    @ManyToOne
+    @JoinColumn(name = "entreprise_id")
+    @NotNull
+    public Enterprise entreprise;
 
+    public Enterprise getEnterprise() {
+        return entreprise;
+    }
 
-    public Project(String title, String description) {
+    public void setEnterprise(Enterprise entreprise) {
+        this.entreprise = entreprise;
+    }
+
+    public Project(String title, String description, Enterprise entreprise) {
         this.title = title;
         this.description = description;
+        this.entreprise = entreprise;
     }
 
     public Project() {

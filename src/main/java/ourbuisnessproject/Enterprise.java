@@ -31,6 +31,21 @@ public class Enterprise {
     @Column(nullable = false)
     private String contactEmail;
 
+
+    public Enterprise(String name, String description, String contactName, String contactEmail) {
+        this.name = name;
+        this.description = description;
+        this.contactName = contactName;
+        this.contactEmail = contactEmail;
+    }
+
+    public Enterprise() {
+        this.name = "Company & Co";
+        this.description = "Comp description";
+        this.contactName = "Company & Co";
+        this.contactEmail = "Company & Co";
+    }
+
     /**
      * set the name
      * @param name

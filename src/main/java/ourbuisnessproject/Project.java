@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "projects")
 public class Project {
+
+
     /**
      * Create a project with a title and a description
      */
@@ -22,10 +24,18 @@ public class Project {
     @Column(length = 2000)
     public String description;
 
-    /**
-     * Set the title
-     * @param title the title
-     */
+
+
+    public Project(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public Project() {
+        this.title = "rereere";
+        this.description = "Project description";
+
+    }
     public void setTitle(String title){
         this.title = title;
     }

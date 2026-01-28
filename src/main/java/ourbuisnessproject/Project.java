@@ -2,58 +2,56 @@ package ourbuisnessproject;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "projects")
 public class Project {
 
-
-    /**
-     * Create a project with a title and a description
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @NotBlank
     @Column(nullable = false)
-    public String title;
+    private String title;
 
     @Column(length = 2000)
-    public String description;
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "entreprise_id")
     @NotNull
-    public Enterprise entreprise;
-
-    public Enterprise getEnterprise() {
-        return entreprise;
-    }
-
-    public void setEnterprise(Enterprise entreprise) {
-        this.entreprise = entreprise;
-    }
-
-    public Project(String title, String description, Enterprise entreprise) {
-        this.title = title;
-        this.description = description;
-        this.entreprise = entreprise;
-    }
+    private Enterprise enterprise;
 
     public Project() {
         this.title = "rereere";
         this.description = "Project description";
-
     }
+
+    public Project(String title, String description, Enterprise enterprise) {
+        this.title = title;
+        this.description = description;
+        this.enterprise = enterprise;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
     public void setTitle(String title){
         this.title = title;
     }
 
-    public String getTitle(){
-        return this.title;
+    public String getDescription(){
+        return this.description;
     }
 
     /**
@@ -64,16 +62,11 @@ public class Project {
         this.description = description;
     }
 
-    public String getDescription(){
-        return this.description;
+    public Enterprise getEnterprise() {
+        return enterprise;
     }
 
-
-    public long getId(){
-        return id;
-    }
-
-    public void setId(long id){
-        this.id = id;
+    public void setEnterprise(Enterprise enterprise) {
+        this.enterprise = enterprise;
     }
 }

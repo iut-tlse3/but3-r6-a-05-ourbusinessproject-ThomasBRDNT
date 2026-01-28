@@ -2,43 +2,91 @@ package ourbuisnessproject;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EnterpriseProjectService {
+
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
-    public EnterpriseProjectService() {
-    }
-
+    /**
+     * Create a new EnterpriseProjectService initialized with an entity manager
+     * @param entityManager the entity manager
+     */
     public EnterpriseProjectService(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public EntityManager getEntityManager() {
-        return entityManager;
+        return this.entityManager;
     }
 
-    public Project newProject(String title, String description, Enterprise newEnterprise) {
-        Project project = new Project(title, description, newEnterprise);
-        entityManager.persist(project);
-        entityManager.flush();
+    /**
+     * Create a new project
+     * @param aTitle the title of the new project
+     * @param aDescription the description of the new project
+     * @return the created project
+     */
+    public Project newProject(String aTitle, String aDescription, Enterprise enterprise) {
+        Project project = new Project();
+        project.setTitle(aTitle);
+        project.setDescription(aDescription);
+        project.setEnterprise(enterprise);
+        this.entityManager.persist(project);
+        this.entityManager.flush();
+        enterprise.addProject(project);
         return project;
     }
 
-    public Enterprise newEnterprise(String name, String description, String contactName, String contactEmail) {
-        Enterprise enterprise = new Enterprise(name, description, contactName, contactEmail);
-        entityManager.persist(enterprise);
-        entityManager.flush();
+    /**
+     * Find the project for the given id
+     * @param projectId the id of the searched project
+     * @return the project with corresponding id or null
+     */
+    public Project findProjectById(Long projectId) {
+        return this.entityManager.find(Project.class, projectId);
+    }
+
+    /**
+     * Create a new enterprise
+     * @param aName the name of the enterprise
+     * @param aDescription the description of the enterprise
+     * @param aContactName the contact name of the enterprise
+     * @param mail the mail of the enterprise
+     * @return the created enterprise
+     */
+    public Enterprise newEnterprise(
+            String aName,
+            String aDescription,
+            String aContactName,
+            String mail
+    ) {
+        Enterprise enterprise = new Enterprise();
+        enterprise.setName(aName);
+        enterprise.setDescription(aDescription);
+        enterprise.setContactEmail(mail);
+        enterprise.setContactName(aContactName);
+        this.entityManager.persist(enterprise);
+        this.entityManager.flush();
         return enterprise;
     }
 
-    public Project findProjectById(Long id) {
-        return entityManager.find(Project.class, id);
+    /**
+     * Find the enterprise for the given id
+     * @param enterpriseId the id of the searched enterprise
+     * @return the enterprise if it exists else null
+     */
+    public Enterprise findEnterpriseById(Long enterpriseId) {
+        return this.entityManager.find(Enterprise.class, enterpriseId);
     }
 
-    public Enterprise findEnterpriseById(Long id) {
-        return entityManager.find(Enterprise.class, id);
+    public List<Project> findAllProjects(){
+        String query = "SELECT p FROM Project p ORDER BY p.title";
+        TypedQuery<Project> queryObj = entityManager.createQuery(query, Project.class);
+        return queryObj.getResultList();
     }
 }

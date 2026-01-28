@@ -1,99 +1,88 @@
+
 package ourbuisnessproject;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Entity
-@Table(name = "enterprises")
 public class Enterprise {
-    /**
-     * Create an Enterprise
-     */
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotBlank
-    @Column(nullable = false)
     private String name;
-    @Size(min = 10, max = 100)
-    @Column(nullable = false)
+    @Size(min = 10)
     private String description;
     @NotBlank
-    @Column(nullable = false)
     private String contactName;
-    @NotBlank
-    @Email
-    @Column(nullable = false)
+    @NotBlank @Email
     private String contactEmail;
 
+    @OneToMany(mappedBy = "enterprise")
+    private Collection<Project> projects;
 
-    public Enterprise(String name, String description, String contactName, String contactEmail) {
-        this.name = name;
-        this.description = description;
-        this.contactName = contactName;
-        this.contactEmail = contactEmail;
+    public Collection<Project> getProjects() {
+        return projects;
     }
 
-    public Enterprise() {
-        this.name = "Company & Co";
-        this.description = "Comp description";
-        this.contactName = "Company & Co";
-        this.contactEmail = "Company & Co";
-    }
 
     /**
-     * set the name
-     * @param name
+     *
+     * @param name ..
      */
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * set the description
-     * @param description
-     */
-    public void setDescription(String description){
-        this.description = description;
-    }
-
-    /**
-     * set the contact name
-     * @param contactName
-     */
-    public void setContactName(String contactName){
-        this.contactName = contactName;
-    }
-
-    /**
-     * set the contact email
-     * @param contactEmail
-     */
-    public void setContactEmail(String contactEmail){
-        this.contactEmail = contactEmail;
-    }
-
-    public Long getId(){
+    public Long getId() {
         return id;
     }
-    public String getName(){
-        return name;
-    }
-    public String getDescription(){
-        return description;
-    }
-    public String getContactName(){
-        return contactName;
-    }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    /**
+     * Add a project to the collection of projects
+     * @param project the project to add
+     */
+    public void addProject(Project project) {
+        if (this.projects == null) {
+            this.projects = new ArrayList<>();
+        }
+        this.projects.add(project);
+    }
 }

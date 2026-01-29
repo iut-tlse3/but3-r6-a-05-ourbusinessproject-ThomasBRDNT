@@ -74,7 +74,6 @@ public class EnterpriseProjectService {
         this.entityManager.flush();
         return enterprise;
     }
-
     /**
      * Find the enterprise for the given id
      * @param enterpriseId the id of the searched enterprise

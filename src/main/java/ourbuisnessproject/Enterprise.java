@@ -26,10 +26,20 @@ public class Enterprise {
     @OneToMany(mappedBy = "enterprise")
     private Collection<Project> projects;
 
+    public Enterprise(String name, String description, String contactName, String contactEmail) {
+        this.name = name;
+        this.description = description;
+        this.contactName = contactName;
+        this.contactEmail = contactEmail;
+    }
+
+    public Enterprise() {
+
+    }
+
     public Collection<Project> getProjects() {
         return projects;
     }
-
 
     /**
      *

@@ -17,11 +17,11 @@ public class InitializationService {
     @Transactional
     public void initProjects(){
         this.enterprise1 = enterpriseProjectService.newEnterprise("entreprise1", "description1", "contact1", "email1@gygy.com");
-        this.enterprise2 = enterpriseProjectService.newEnterprise("entreprise2", "description2", "contact2", "email2@dhdh.com");
+        this.enterprise2 = enterpriseProjectService.newEnterprise("entreprise1", "description2", "contact2", "email2@dhdh.com");
 
         this.project1 = enterpriseProjectService.newProject("project1", "description1", this.enterprise1);
-        this.project2 = enterpriseProjectService.newProject("project2", "description2", this.enterprise2);
-        this.project3 = enterpriseProjectService.newProject("project3", "description3", this.enterprise1);
+        this.project2 = enterpriseProjectService.newProject("project1", "description2", this.enterprise2);
+        this.project3 = enterpriseProjectService.newProject("project1", "description3", this.enterprise1);
     }
 
     public Project getProject1E1(){

@@ -1,6 +1,7 @@
 
 package ourbuisnessproject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class Enterprise {
     @NotBlank @Email
     private String contactEmail;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "enterprise")
     private Collection<Project> projects;
 

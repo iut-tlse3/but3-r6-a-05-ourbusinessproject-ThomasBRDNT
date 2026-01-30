@@ -16,6 +16,10 @@ public class InitializationService {
 
     @Transactional
     public void initProjects(){
+        /*
+         *On remarque qu'avec un projet ayant null commme titre, on obtient 0 projets initialisés, cela est du au fait
+         *Qu'on a une balise transactional. Comme on a une erreur, il y a un rollback sur la méthode
+         */
         this.enterprise1 = enterpriseProjectService.newEnterprise("entreprise1", "description1", "contact1", "email1@gygy.com");
         this.enterprise2 = enterpriseProjectService.newEnterprise("entreprise1", "description2", "contact2", "email2@dhdh.com");
 
